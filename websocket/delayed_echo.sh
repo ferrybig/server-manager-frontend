@@ -10,11 +10,11 @@ do
 		(
 			./count_1.sh | while read count
 			do
-				echo '> {"success":1,"hasMore":1,"type":"stream_data","id":'$var', "data":"'$count'\n"}' >&2
-				echo '{"success":1,"hasMore":1,"type":"stream_data","id":'$var', "data":"'$count'\n"}'
+				echo '> {"success":1,"moreData":1,"type":"stream_data","id":'$var', "data":"'$count'\n"}' >&2
+				echo '{"success":1,"moreData":1,"type":"stream_data","id":'$var', "data":"'$count'\n"}'
 			done 
-			echo '> {"success":1,"hasMore":0,"type":"stream_end","id":'$var'}' >&2
-			echo '{"success":1,"hasMore":0,"type":"stream_end","id":'$var'}'
+			echo '> {"success":1,"moreData":0,"type":"stream_end","id":'$var'}' >&2
+			echo '{"success":1,"moreData":0,"type":"stream_end","id":'$var'}'
 		) &
 	else
 		echo '> {"success":1,"type":"delayed","request":'$line', "id":'$var'}' >&2

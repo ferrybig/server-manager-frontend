@@ -107,16 +107,16 @@ export default class Connector {
 		case 'stream_data':
 		{
 			const task = this.pendingStreamingTasks[data.id];
-			if (!data.hasMore) {
-				task.resolve();
-				delete this.pendingStreamingTasks[data.id];
-			}
 			if (task) {
+				if (!data.moreData) {
+					task.resolve();
+					delete this.pendingStreamingTasks[data.id];
+				}
 				task.stream(data.data);
-				return;
+			} else {
+				logger.warn(`Killing unannounced stream: ${data.id}`);
+				this.sendData(requests.KILL_STREAM(data.id));
 			}
-			logger.warn(`Killing unannounced stream: ${data.id}`);
-			this.sendData(requests.KILL_STREAM(data.id));
 			break;
 		}
 		case 'stream_end':

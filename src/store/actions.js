@@ -6,7 +6,6 @@ import messageUnsplitter from '../api/messageUnsplitter';
 const listenerRegister = {};
 
 export const enableListener = ({ commit }, { server, channel }) => {
-	console.log(channel);
 	const registerMethod = () => {
 		const registration = { count: 1 };
 		listenerRegister[server][channel] = registration;
@@ -60,4 +59,34 @@ export const disableListener = ({ commit }, { server, channel }) => {
 			});
 		}
 	}
+};
+export const startServer = ({ commit }, { server }) => {
+	commit(types.START_PENDING_OPERATION, {
+		server,
+	});
+	connector.sendAction(server, 'start', '').finally(() => {
+		commit(types.STOP_PENDING_OPERATION, {
+			server,
+		});
+	});
+};
+export const killServer = ({ commit }, { server }) => {
+	commit(types.START_PENDING_OPERATION, {
+		server,
+	});
+	connector.sendAction(server, 'kill', '').finally(() => {
+		commit(types.STOP_PENDING_OPERATION, {
+			server,
+		});
+	});
+};
+export const sendCommand = ({ commit }, { server, command }) => {
+	commit(types.START_PENDING_OPERATION, {
+		server,
+	});
+	connector.sendAction(server, 'send_command', command).finally(() => {
+		commit(types.STOP_PENDING_OPERATION, {
+			server,
+		});
+	});
 };

@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import * as types from './mutation-types';
 
 export default {
@@ -31,6 +32,16 @@ export default {
 			if (message.channel === channel && message.server === server) {
 				state.messages.splice(i, 1);
 			}
+		}
+	},
+	[types.STOP_PENDING_OPERATION](state, { server }) {
+		state.pendingOperations[server] -= 1;
+	},
+	[types.START_PENDING_OPERATION](state, { server }) {
+		if (!state.pendingOperations[server]) {
+			Vue.set(state.pendingOperations, server, 1);
+		} else {
+			state.pendingOperations[server] += 1;
 		}
 	},
 };

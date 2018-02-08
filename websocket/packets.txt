@@ -1,0 +1,5 @@
+
+{"type":"register_channel","channelName":"console"}
+{"type":"action","action":"start"}
+{"type":"kill_stream","id":1}
+{"type":"action","action":"send_command","arguments":"stop"}

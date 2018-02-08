@@ -1,7 +1,7 @@
 
-export default function (stream, lineLimit = 100) {
+export default function messageUnsplitter(stream, lineLimit = 100) {
 	let buffer = '';
-	return function (message, ...args) {
+	return function messageUnsplitterIntern(message, ...args) {
 		buffer += message;
 		const split = buffer.split('\n');
 		if (split.length > 1) {

@@ -8,6 +8,8 @@ const state = {
 	messages: [
 	],
 	lastId: 0,
+	serverStates: {},
+	pendingOperations: {},
 };
 
 
@@ -19,7 +21,7 @@ const store = new Vuex.Store({
 	actions,
 	mutations,
 	plugins: [],
-	strict: true,
+	strict: process.env.NODE_ENV !== 'production',
 });
 
 export default store;
