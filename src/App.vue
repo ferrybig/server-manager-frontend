@@ -1,6 +1,11 @@
 <template>
-	<div id="app">
-		<router-view/>
+	<div class="app">
+		<div class="app__inner">
+			<div class="app__account">
+				account bar
+			</div>
+			<router-view/>
+		</div>
 	</div>
 </template>
 
@@ -11,4 +16,16 @@ export default {
 </script>
 
 <style>
+	.app {
+
+	}
+	.app__account {
+		/*height: 60px;*/
+		/*background-color: darkgrey;*/
+	}
+	.app__inner {
+	}
+	html, body {
+
+	}
 </style>

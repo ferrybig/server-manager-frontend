@@ -12,7 +12,7 @@ export default {
 				count += 1;
 			}
 		}
-		if (count > 20) {
+		if (count > 40) {
 			state.messages.splice(firstIndex, 1);
 		}
 		state.lastId += 1;

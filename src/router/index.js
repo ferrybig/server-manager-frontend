@@ -4,6 +4,7 @@ import Router from 'vue-router';
 const HelloWorld = () => import(/* webpackChunkName: "main-app" */ '@/components/HelloWorld');
 const SmfListing = () => import(/* webpackChunkName: "main-app" */ '@/pages/List');
 const SmfServer = () => import(/* webpackChunkName: "main-app" */ '@/pages/Server');
+const SmfServerConsole = () => import(/* webpackChunkName: "main-app" */ '@/pages/server/Console');
 
 Vue.use(Router);
 
@@ -24,6 +25,20 @@ export default new Router({
 			name: 'Server',
 			component: SmfServer,
 			props: true,
+			children: [
+				{
+					path: '',
+					name: 'ServerConsole',
+					component: SmfServerConsole,
+					props: true,
+				},
+				{
+					path: 'console',
+					name: 'ServerConsole',
+					component: SmfServerConsole,
+					props: true,
+				},
+			],
 		},
 	],
 });
