@@ -13,18 +13,22 @@ export const enableListener = ({ commit }, { server, channel }) => {
 			server,
 			channel,
 		});
+		let streamHandler = (msg) => {
+			if (registration.count > 0) {
+				commit(types.RECEIVE_MESSAGE, {
+					server,
+					channel,
+					msg,
+				});
+			}
+		};
+		if (channel === 'console') {
+			streamHandler = messageUnsplitter(streamHandler);
+		}
 		registration.connection = connector.getStream(
 			server,
 			channel,
-			messageUnsplitter((msg) => {
-				if (registration.count > 0) {
-					commit(types.RECEIVE_MESSAGE, {
-						server,
-						channel,
-						msg,
-					});
-				}
-			}),
+			streamHandler,
 		);
 	};
 	if (!listenerRegister[server]) {

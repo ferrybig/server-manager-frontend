@@ -58,7 +58,7 @@ export default {
 	},
 	computed: {
 		console() {
-			return this.$store.state.messages.filter(m => m.server === this.server && m.channel === 'console');
+			return this.$store.state.messages[this.server];
 		},
 		hasPendingOperations() {
 			return this.$store.state.pendingOperations[this.server] > 0;

@@ -5,8 +5,12 @@ import * as actions from './actions';
 import mutations from './mutations';
 
 const state = {
-	messages: [
-	],
+	messages: {
+
+	},
+	state: {
+
+	},
 	lastId: 0,
 	serverStates: {},
 	pendingOperations: {},

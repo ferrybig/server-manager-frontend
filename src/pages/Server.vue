@@ -1,14 +1,14 @@
 <template>
 	<div class="server">
-		Server test page
+		Server test page: {{ state }}
 		<div>
 
 			<button
-				@click="startServer(server)"
+				@click="startServer({server})"
 				:disabled="hasPendingOperations"
 			>Start server</button>
 			<button
-				@click="stopServer(server)"
+				@click="stopServer({server})"
 				:disabled="hasPendingOperations"
 			>Kill server</button>
 		</div>
@@ -40,17 +40,28 @@ export default {
 		hasPendingOperations() {
 			return this.$store.state.pendingOperations[this.server] > 0;
 		},
+		state() {
+			return this.$store.state.state[this.server];
+		},
 	},
 	created() {
 		this.$store.dispatch('enableListener', {
 			server: this.server,
 			channel: 'console',
 		});
+		this.$store.dispatch('enableListener', {
+			server: this.server,
+			channel: 'state',
+		});
 	},
 	destroyed() {
 		this.$store.dispatch('disableListener', {
 			server: this.server,
 			channel: 'console',
+		});
+		this.$store.dispatch('disableListener', {
+			server: this.server,
+			channel: 'state',
 		});
 	},
 	methods: {
