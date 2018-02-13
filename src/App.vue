@@ -6,12 +6,18 @@
 			</div>
 			<router-view/>
 		</div>
+		<pre>{{ errors }}</pre>
 	</div>
 </template>
 
 <script>
 export default {
 	name: 'App',
+	computed: {
+		errors() {
+			return this.$store.state.errors;
+		},
+	},
 };
 </script>
 

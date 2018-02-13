@@ -5,14 +5,24 @@
 
 			<button
 				@click="startServer({server})"
-				:disabled="hasPendingOperations"
+				:disabled="startDisabled"
 			>Start server</button>
+
 			<button
-				@click="stopServer({server})"
-				:disabled="hasPendingOperations"
+				v-if="hasStoppedServer"
+				@click="killServer({server})"
+				:disabled="killDisabled"
+				key="killServer"
 			>Kill server</button>
+			<button
+				v-else
+				@click="stopServer()"
+				:disabled="killDisabled"
+				key="stopServer"
+			>Stop server</button>
 		</div>
 		<router-view/>
+		<pre>{{ info }}</pre>
 	</div>
 </template>
 
@@ -33,7 +43,7 @@ export default {
 	},
 	data() {
 		return {
-
+			hasStoppedServer: false,
 		};
 	},
 	computed: {
@@ -43,8 +53,26 @@ export default {
 		state() {
 			return this.$store.state.state[this.server];
 		},
+		info() {
+			return this.$store.state.serverInfo[this.server];
+		},
+		startDisabled() {
+			return this.hasPendingOperations || this.state === 'prepare_start' || this.state === 'started';
+		},
+		killDisabled() {
+			return this.hasPendingOperations || this.state === 'crashed' || this.state === 'stopped';
+		},
+	},
+	watch: {
+		state() {
+			this.hasStoppedServer = false;
+		},
 	},
 	created() {
+		this.$store.dispatch('loadServerInfo', {
+			server: this.server,
+			channel: 'console',
+		});
 		this.$store.dispatch('enableListener', {
 			server: this.server,
 			channel: 'console',
@@ -65,11 +93,17 @@ export default {
 		});
 	},
 	methods: {
-
 		...mapActions([
 			'startServer',
-			'stopServer',
+			'killServer',
+			'sendCommand',
 		]),
+		stopServer() {
+			for (let i = 0; i < this.info.shutdownCommands.length; i++) {
+				this.sendCommand({ server: this.server, command: this.info.shutdownCommands[i] });
+			}
+			this.hasStoppedServer = true;
+		},
 	},
 };
 </script>

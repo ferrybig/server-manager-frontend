@@ -42,5 +42,11 @@ export default {
 			state.pendingOperations[server] += 1;
 		}
 	},
+	[types.EXCEPTION_CAUGHT](state, { error }) {
+		state.errors.push(error);
+	},
+	[types.UPDATE_SERVER_INFO](state, { server, data }) {
+		Vue.set(state.serverInfo, server, data);
+	},
 };
 

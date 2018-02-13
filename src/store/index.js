@@ -6,11 +6,11 @@ import mutations from './mutations';
 
 const state = {
 	messages: {
-
 	},
 	state: {
-
 	},
+	errors: [],
+	serverInfo: {},
 	lastId: 0,
 	serverStates: {},
 	pendingOperations: {},
