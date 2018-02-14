@@ -43,7 +43,11 @@ export default {
 		}
 	},
 	[types.EXCEPTION_CAUGHT](state, { error }) {
-		state.errors.push(error);
+		state.errors.push({
+			error,
+			message: error.message,
+			stack: error.stack,
+		});
 	},
 	[types.UPDATE_SERVER_INFO](state, { server, data }) {
 		Vue.set(state.serverInfo, server, data);

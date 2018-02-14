@@ -1,23 +1,29 @@
 
-export const ACTION = function ACTION(server, action, args) {
+export const SERVER_ACTION = function SERVER_ACTION(server, action, args) {
 	return {
-		type: 'action',
+		type: 'server_action',
 		action,
 		arguments: args,
 		server,
 	};
 };
-export const INFO = function INFO(server) {
+export const SERVER_INFO = function SERVER_INFO(server) {
 	return {
-		type: 'info',
+		type: 'server_info',
 		server,
 	};
 };
-export const REGISTER_CHANNEL = function REGISTER_CHANNEL(server, channel) {
+export const SERVER_LISTEN = function SERVER_LISTEN(server, channel) {
 	return {
-		type: 'register_channel',
+		type: 'server_listen',
 		channelName: channel,
 		server,
+	};
+};
+
+export const SERVER_LIST = function SERVER_LIST() {
+	return {
+		type: 'server_list',
 	};
 };
 export const KILL_STREAM = function KILL_STREAM(streamId) {

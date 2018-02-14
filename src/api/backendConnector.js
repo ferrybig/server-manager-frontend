@@ -7,15 +7,19 @@ export default class BackendConnector {
 		this.connector = new Connector(websocketConnector);
 	}
 
-	getInfo(server) {
-		return this.connector.sendData(requests.INFO(server)).promise;
+	serverList() {
+		return this.connector.sendData(requests.SERVER_LIST()).promise;
 	}
 
-	getStream(server, channel, stream) {
-		return this.connector.sendData(requests.REGISTER_CHANNEL(server, channel), stream);
+	serverInfo(server) {
+		return this.connector.sendData(requests.SERVER_INFO(server)).promise;
 	}
 
-	sendAction(server, action, args) {
-		return this.connector.sendData(requests.ACTION(server, action, args)).promise;
+	serverListen(server, channel, stream) {
+		return this.connector.sendData(requests.SERVER_LISTEN(server, channel), stream);
+	}
+
+	serverAction(server, action, args) {
+		return this.connector.sendData(requests.SERVER_ACTION(server, action, args)).promise;
 	}
 }

@@ -53,7 +53,7 @@ export const enableListener = ({ commit }, { server, channel }) => {
 		if (channel === 'console') {
 			streamHandler = messageUnsplitter(streamHandler);
 		}
-		registration.connection = connector.getStream(
+		registration.connection = connector.serverListen(
 			server,
 			channel,
 			streamHandler,
@@ -98,7 +98,7 @@ export const startServer = ({ commit }, { server }) => {
 		{
 			server,
 		},
-		() => connector.sendAction(server, 'start'),
+		() => connector.serverAction(server, 'start'),
 	);
 };
 export const killServer = ({ commit }, { server }) => {
@@ -107,7 +107,7 @@ export const killServer = ({ commit }, { server }) => {
 		{
 			server,
 		},
-		() => connector.sendAction(server, 'kill'),
+		() => connector.serverAction(server, 'kill'),
 	);
 };
 export const sendCommand = ({ commit }, { server, command }) => {
@@ -116,11 +116,11 @@ export const sendCommand = ({ commit }, { server, command }) => {
 		{
 			server,
 		},
-		() => connector.sendAction(server, 'send_command', command),
+		() => connector.serverAction(server, 'send_command', command),
 	);
 };
 export const loadServerInfo = ({ commit }, { server }) => {
-	const load = () => errorRecorder(commit, connector.getInfo(server))
+	const load = () => errorRecorder(commit, connector.serverInfo(server))
 		.then((data) => {
 			commit(types.UPDATE_SERVER_INFO, {
 				server,
