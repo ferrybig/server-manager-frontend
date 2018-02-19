@@ -14,7 +14,7 @@
 					<p>{{ info.format[groupKey][key].description }}</p>
 					<input
 						:value="value"
-						@input="e => update(groupKey, key, e.currentTarget.value)"
+						@input="e => setConfig(groupKey, key, e.currentTarget.value)"
 					>
 				</fieldset>
 			</fieldset>
@@ -40,7 +40,9 @@ export default {
 	},
 	data() {
 		return {
-			updated: undefined,
+			config: {
+
+			},
 		};
 	},
 	computed: {
@@ -50,8 +52,20 @@ export default {
 		},
 	},
 	methods: {
-		update(groupKey, key, value) {
-			this.updated = { groupKey, key, value };
+		setConfig(groupKey, key, value) {
+			if (!this.config[groupKey]) {
+				this.config[groupKey] = {};
+			}
+			this.config[groupKey][key] = value;
+		},
+		getConfig(groupKey, key) {
+			if (!this.config[groupKey]) {
+				return this.info[groupKey][key];
+			}
+			if (this.config[groupKey][key] === undefined) {
+				return this.info[groupKey][key];
+			}
+			return this.config[groupKey][key];
 		},
 	},
 };

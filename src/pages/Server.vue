@@ -21,6 +21,8 @@
 				key="stopServer"
 			>Stop server</button>
 		</div>
+		<router-link :to="{name: 'ServerConsole', params:{server: server}}">Console</router-link>
+		<router-link :to="{name: 'ServerConfig', params:{server: server}}">Config</router-link>
 		<router-view/>
 		<pre>{{ info }}</pre>
 	</div>

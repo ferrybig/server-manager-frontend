@@ -4,6 +4,7 @@
 			<div class="app__account">
 				account bar
 			</div>
+			<router-link :to="{name: 'ServersList'}">Server listing</router-link>
 			<router-view/>
 		</div>
 		<pre>{{ errors }}</pre>
