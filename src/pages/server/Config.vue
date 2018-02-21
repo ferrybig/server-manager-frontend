@@ -13,7 +13,7 @@
 					<legend>{{ key }}</legend>
 					<p>{{ info.format[groupKey][key].description }}</p>
 					<input
-						:value="value"
+						:value="getConfig(groupKey, key)"
 						@input="e => setConfig(groupKey, key, e.currentTarget.value)"
 					>
 				</fieldset>
@@ -22,14 +22,10 @@
 		<div v-else>
 			Loading...
 		</div>
-		<div>
-			Last update:
-			<pre>{{ updated }}</pre>
-		</div>
 	</div>
 </template>
 <script>
-
+import Vue from 'vue';
 
 export default {
 	props: {
@@ -40,13 +36,11 @@ export default {
 	},
 	data() {
 		return {
-			config: {
-
-			},
+			config: {},
+			oldConfig: {},
 		};
 	},
 	computed: {
-
 		info() {
 			return this.$store.state.serverInfo[this.server];
 		},
@@ -54,16 +48,22 @@ export default {
 	methods: {
 		setConfig(groupKey, key, value) {
 			if (!this.config[groupKey]) {
-				this.config[groupKey] = {};
+				Vue.set(this.config, groupKey, {});
+				Vue.set(this.oldConfig, groupKey, {});
 			}
-			this.config[groupKey][key] = value;
+			if (this.config[groupKey][key] === undefined) {
+				Vue.set(this.config[groupKey], key, value);
+				Vue.set(this.oldConfig[groupKey], key, this.info.values[groupKey][key]);
+			} else {
+				this.config[groupKey][key] = value;
+			}
 		},
 		getConfig(groupKey, key) {
 			if (!this.config[groupKey]) {
-				return this.info[groupKey][key];
+				return this.info.values[groupKey][key];
 			}
 			if (this.config[groupKey][key] === undefined) {
-				return this.info[groupKey][key];
+				return this.info.values[groupKey][key];
 			}
 			return this.config[groupKey][key];
 		},
