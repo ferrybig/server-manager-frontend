@@ -6,18 +6,19 @@
 				:key="groupKey"
 			>
 				<legend>{{ groupKey }}</legend>
-				<fieldset
+				<server-property
 					v-for="(value, key) in groupValue"
 					:key="key"
-				>
-					<legend>{{ key }}</legend>
-					<p>{{ info.format[groupKey][key].description }}</p>
-					<input
-						:value="getConfig(groupKey, key)"
-						@input="e => setConfig(groupKey, key, e.currentTarget.value)"
-					>
-				</fieldset>
+					:name="key"
+					:description="info.format[groupKey][key].description"
+					:format="info.format[groupKey][key].format"
+					:value="getConfig(groupKey, key)"
+					@input="e => setConfig(groupKey, key, e)"
+				/>
 			</fieldset>
+			<button :disabled="!hasUpdates">
+				Save
+			</button>
 		</template>
 		<div v-else>
 			Loading...
@@ -26,8 +27,12 @@
 </template>
 <script>
 import Vue from 'vue';
+import ServerProperty from '@/components/properties';
 
 export default {
+	components: {
+		ServerProperty,
+	},
 	props: {
 		server: {
 			type: String,
@@ -43,6 +48,9 @@ export default {
 	computed: {
 		info() {
 			return this.$store.state.serverInfo[this.server];
+		},
+		hasUpdates() {
+			return Object.keys(this.config).length > 0;
 		},
 	},
 	methods: {
