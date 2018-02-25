@@ -22,4 +22,8 @@ export default class BackendConnector {
 	serverAction(server, action, args) {
 		return this.connector.sendData(requests.SERVER_ACTION(server, action, args)).promise;
 	}
+
+	serverUpdateProperties(server, properties) {
+		return this.connector.sendData(requests.SERVER_UPDATE_PROPERTIES(server, properties)).promise;
+	}
 }
