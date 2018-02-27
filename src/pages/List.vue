@@ -7,7 +7,9 @@
 		>
 			<legend>{{ key }}</legend>
 			<pre>{{ server }}</pre>
-			<router-link :to="{name: 'ServerConsole', params: {server: key}}">{{ server.name }}</router-link>
+			<router-link :to="{name: 'ServerConsole', params: {server: key}}">
+				{{ server.name }}
+			</router-link>
 		</fieldset>
 	</div>
 </template>
