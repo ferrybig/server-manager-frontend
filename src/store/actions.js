@@ -92,6 +92,13 @@ export const disableListener = ({ commit }, { server, channel }) => {
 		}
 	}
 };
+export const serverList = ({ commit }) => {
+	connector.serverList().then((list) => {
+		commit(types.SERVER_LIST_RECEIVED, {
+			list,
+		});
+	});
+};
 export const startServer = ({ commit }, { server }) => {
 	pendingOperationHandler(
 		commit,

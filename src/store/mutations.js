@@ -52,5 +52,8 @@ export default {
 	[types.UPDATE_SERVER_INFO](state, { server, data }) {
 		Vue.set(state.serverInfo, server, data);
 	},
+	[types.SERVER_LIST_RECEIVED](state, { list }) {
+		state.serverList = list;
+	},
 };
 

@@ -14,6 +14,7 @@ const state = {
 	lastId: 0,
 	serverStates: {},
 	pendingOperations: {},
+	serverList: {},
 };
 
 

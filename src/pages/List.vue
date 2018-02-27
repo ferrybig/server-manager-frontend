@@ -1,8 +1,14 @@
 <template>
 	<div class="smf-listing">
 		Listing test page
-		<router-link :to="{name: 'ServerConsole', params:{server: 'test'}}">test</router-link>
-		<router-link :to="{name: 'ServerConsole', params:{server: 'test1'}}">test1</router-link>
+		<fieldset
+			v-for="(server, key) in list"
+			:key="server"
+		>
+			<legend>{{ key }}</legend>
+			<pre>{{ server }}</pre>
+			<router-link :to="{name: 'ServerConsole', params: {server: key}}">test</router-link>
+		</fieldset>
 	</div>
 </template>
 
@@ -18,9 +24,12 @@ export default {
 		};
 	},
 	computed: {
+		list() {
+			return this.$store.state.serverList;
+		},
 	},
 	created() {
-
+		this.$store.dispatch('serverList');
 	},
 	// Methods
 	methods: {
