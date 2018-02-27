@@ -23,7 +23,6 @@ export default new Router({
 		},
 		{
 			path: '/server/:server',
-			name: 'Server',
 			component: SmfServer,
 			props: true,
 			children: [

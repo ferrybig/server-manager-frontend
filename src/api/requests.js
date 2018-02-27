@@ -20,7 +20,13 @@ export const SERVER_LISTEN = function SERVER_LISTEN(server, channel) {
 		server,
 	};
 };
-
+export const SERVER_UPDATE_PROPERTIES = function SERVER_UPDATE_PROPERTIES(server, properties) {
+	return {
+		type: 'server_update_properties',
+		server,
+		properties,
+	};
+};
 export const SERVER_LIST = function SERVER_LIST() {
 	return {
 		type: 'server_list',

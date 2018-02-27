@@ -99,7 +99,7 @@ export const serverList = ({ commit }) => {
 		});
 	});
 };
-export const startServer = ({ commit }, { server }) => {
+export const startServer = ({ commit }, { server }) =>
 	pendingOperationHandler(
 		commit,
 		{
@@ -107,8 +107,7 @@ export const startServer = ({ commit }, { server }) => {
 		},
 		() => connector.serverAction(server, 'start'),
 	);
-};
-export const killServer = ({ commit }, { server }) => {
+export const killServer = ({ commit }, { server }) =>
 	pendingOperationHandler(
 		commit,
 		{
@@ -116,8 +115,7 @@ export const killServer = ({ commit }, { server }) => {
 		},
 		() => connector.serverAction(server, 'kill'),
 	);
-};
-export const sendCommand = ({ commit }, { server, command }) => {
+export const sendCommand = ({ commit }, { server, command }) =>
 	pendingOperationHandler(
 		commit,
 		{
@@ -125,26 +123,35 @@ export const sendCommand = ({ commit }, { server, command }) => {
 		},
 		() => connector.serverAction(server, 'send_command', command),
 	);
-};
-export const loadServerInfo = ({ commit }, { server }) => {
-	const load = () => errorRecorder(commit, connector.serverInfo(server))
-		.then((data) => {
-			commit(types.UPDATE_SERVER_INFO, {
-				server,
-				data,
-			});
-			if (runningLoadServerInfo[server]) {
-				runningLoadServerInfo[server].callback();
-				runningLoadServerInfo[server] = {};
-			} else {
-				delete runningLoadServerInfo[server];
+export const serverUpdateProperties = ({ commit }, { server, properties }) =>
+	pendingOperationHandler(
+		commit,
+		{
+			server,
+		},
+		() => connector.serverUpdateProperties(server, properties),
+	);
+export const loadServerInfo = ({ commit }, { server }) =>
+	new Promise((resolve, reject) => {
+		const load = () => errorRecorder(commit, connector.serverInfo(server))
+			.then((data) => {
+				commit(types.UPDATE_SERVER_INFO, {
+					server,
+					data,
+				});
+				if (runningLoadServerInfo[server]) {
+					runningLoadServerInfo[server].callback();
+					runningLoadServerInfo[server] = {};
+				} else {
+					delete runningLoadServerInfo[server];
+				}
+				resolve();
+			}).catch(e => reject(e));
+		if (runningLoadServerInfo[server]) {
+			if (!runningLoadServerInfo[server].callback) {
+				runningLoadServerInfo[server].callback = load;
 			}
-		});
-	if (runningLoadServerInfo[server]) {
-		if (!runningLoadServerInfo[server].callback) {
-			runningLoadServerInfo[server].callback = load;
+		} else {
+			load();
 		}
-	} else {
-		load();
-	}
-};
+	});

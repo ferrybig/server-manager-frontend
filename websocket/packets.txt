@@ -1,5 +1,6 @@
 
-{"type":"register_channel","channelName":"console"}
-{"type":"action","action":"start"}
+{"type":"server_listen","channelName":"console"}
+{"type":"server_action","action":"start"}
 {"type":"kill_stream","id":1}
-{"type":"action","action":"send_command","arguments":"stop"}
+{"type":"server_action","action":"send_command","arguments":"stop"}
+{"type":"server_update_properties","server":"test1","properties":{"default":{"test":"test","tt":"aa"}}}

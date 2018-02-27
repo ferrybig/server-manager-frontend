@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<form @submit.prevent="save">
 		<template v-if="info">
 			<fieldset
 				v-for="(groupValue, groupKey) in info.values"
@@ -16,14 +16,17 @@
 					@input="e => setConfig(groupKey, key, e)"
 				/>
 			</fieldset>
-			<button :disabled="!hasUpdates">
+			<button
+				:disabled="!hasUpdates"
+				type="submit"
+			>
 				Save
 			</button>
 		</template>
 		<div v-else>
 			Loading...
 		</div>
-	</div>
+	</form>
 </template>
 <script>
 import Vue from 'vue';
@@ -54,6 +57,19 @@ export default {
 		},
 	},
 	methods: {
+		save() {
+			this.$store.dispatch('serverUpdateProperties', {
+				server: this.server,
+				properties: this.config,
+			}).then(() =>
+				this.$store.dispatch('loadServerInfo', {
+					server: this.server,
+				}),
+			).then(() => {
+				this.config = {};
+				this.oldConfig = {};
+			});
+		},
 		setConfig(groupKey, key, value) {
 			if (!this.config[groupKey]) {
 				Vue.set(this.config, groupKey, {});

@@ -73,7 +73,6 @@ export default {
 	created() {
 		this.$store.dispatch('loadServerInfo', {
 			server: this.server,
-			channel: 'console',
 		});
 		this.$store.dispatch('enableListener', {
 			server: this.server,
