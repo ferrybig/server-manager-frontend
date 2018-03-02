@@ -100,8 +100,11 @@ export default {
 			'sendCommand',
 		]),
 		stopServer() {
-			for (let i = 0; i < this.info.shutdownCommands.length; i++) {
-				this.sendCommand({ server: this.server, command: this.info.shutdownCommands[i] });
+			for (let i = 0; i < this.info.values.default.shutdownCommands.length; i++) {
+				this.sendCommand({
+					server: this.server,
+					command: this.info.values.default.shutdownCommands[i],
+				});
 			}
 			this.hasStoppedServer = true;
 		},

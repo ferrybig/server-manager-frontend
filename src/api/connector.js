@@ -192,7 +192,7 @@ export default class Connector {
 			}),
 
 		};
-		task.cancel = () => {
+		returnData.cancel = () => {
 			if (task.completed) {
 				return returnData.promise;
 			}

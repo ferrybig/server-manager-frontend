@@ -78,7 +78,7 @@ export const disableListener = ({ commit }, { server, channel }) => {
 		listenerRegister[server] = {};
 	}
 	const registration = listenerRegister[server][channel];
-	if (!registration) {
+	if (registration) {
 		registration.count -= 1;
 		// console.assert(registration.count >= 0);
 		if (registration.count <= 0) {
