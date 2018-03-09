@@ -1,6 +1,6 @@
 
 import BackendConnector from './backendConnector';
 
-const connector = new BackendConnector(() => new WebSocket('ws://localhost:8070/websocket'));
+const connector = new BackendConnector(() => new WebSocket(process.env.BACKEND_URL));
 
 export default connector;
