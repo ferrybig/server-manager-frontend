@@ -33,6 +33,7 @@ import Vue from 'vue';
 import ServerProperty from '@/components/properties';
 
 export default {
+	name: 'serverConfig',
 	components: {
 		ServerProperty,
 	},

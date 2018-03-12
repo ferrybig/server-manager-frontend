@@ -39,7 +39,7 @@
 import { mapActions } from 'vuex';
 
 export default {
-	name: '',
+	name: 'server-console',
 	components: {
 
 	},
