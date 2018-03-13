@@ -22,6 +22,12 @@
 			>
 				Save
 			</button>
+			<button
+				:disabled="!hasUpdates"
+				@click="reset"
+			>
+				Reset
+			</button>
 		</template>
 		<div v-else>
 			Loading...
@@ -70,6 +76,10 @@ export default {
 				this.config = {};
 				this.oldConfig = {};
 			});
+		},
+		reset() {
+			this.config = {};
+			this.oldConfig = {};
 		},
 		setConfig(groupKey, key, value) {
 			if (!this.config[groupKey]) {
