@@ -20,14 +20,6 @@
 <script>
 export default {
 	name: 'SmfListing',
-	components: {
-
-	},
-	data() {
-		return {
-
-		};
-	},
 	computed: {
 		list() {
 			return this.$store.state.serverList;
@@ -36,7 +28,6 @@ export default {
 	created() {
 		this.fetchData();
 	},
-	// Methods
 	methods: {
 		fetchData() {
 			this.$store.dispatch('serverList');

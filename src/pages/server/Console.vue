@@ -40,10 +40,6 @@ import { mapActions } from 'vuex';
 
 export default {
 	name: 'server-console',
-	components: {
-
-	},
-
 	props: {
 		server: {
 			type: String,
@@ -72,10 +68,6 @@ export default {
 			}
 			return list;
 		},
-	},
-	created() {
-	},
-	destroyed() {
 	},
 	methods: {
 

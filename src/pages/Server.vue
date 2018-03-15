@@ -32,11 +32,6 @@
 import { mapActions } from 'vuex';
 
 export default {
-	name: '',
-	components: {
-
-	},
-
 	props: {
 		server: {
 			type: String,
