@@ -73,8 +73,7 @@ export default {
 					server: this.server,
 				}),
 			).then(() => {
-				this.config = {};
-				this.oldConfig = {};
+				this.reset();
 			});
 		},
 		reset() {
